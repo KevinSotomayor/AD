@@ -47,28 +47,5 @@ public partial class MainWindow: Gtk.Window
 	
 	}
 	
-	private void showItemSelected(ListStore listStore){
-			Console.WriteLine("Evento activado");
-			TreeIter treeIter;
-			if (comboBox.GetActiveIter(out treeIter) ){
-				object value =listStore.GetValue(treeIter, 0);
-				buffer = textView.Buffer;
-				buffer.Text="Acabas de seleccionar:\n" + "La opcion " + value;
-				Console.WriteLine("ComboBoxChanged id={0}", value);
-   			}
-	}
-
-	public static Type[] GetTypes(Type type, int count){
-
-			List<Type> types = new List<Type>();
-			for(int index = 0; index < count; index ++)
-				types.Add(type);
-			return types.ToArray();
-	}
 	
-	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
-	{
-		Application.Quit ();
-		a.RetVal = true;
-	}
 }
