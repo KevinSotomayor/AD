@@ -13,8 +13,20 @@ public partial class MainWindow: Gtk.Window
 	public MainWindow (): base (Gtk.WindowType.Toplevel)
 	{
 		Build ();
-		////////////////////////////////
+		fillComboBox();	
+	
+	}
+		private void fillComboBox(){
+		
 
+		CellRenderer  cellRenderer2 = new CellRendererText();
+		comboBox.PackStart(cellRenderer2, false); //expand = false
+		comboBox.AddAttribute(cellRenderer2, "text", 1);
+			
+
+		listStore = new ListStore(typeof(string), typeof(string));
+		comboBox.Model = listStore;
+		
 		//Conexion a la base de datos.
 		String connectionString = "Server=localhost;Database=dbprueba;User Id=dbprueba;Password=root";
 		IDbConnection dbConnection = new NpgsqlConnection(connectionString);
@@ -25,45 +37,15 @@ public partial class MainWindow: Gtk.Window
 		IDataReader dataReader = dbCommand.ExecuteReader();
 
 
-		for(int index = 0; index < dataReader.FieldCount; index ++){
-			comboBox.PackStart(new CellRendererText(), false);
-			comboBox.AddAttribute(new CellRendererText(), "text", index);
-		}; // -> Lo mismo que :
-		/*
-		CellRenderer  cellRenderer = new CellRendererText();
-		comboBox.PackStart(cellRenderer, false); //expand = false
-		comboBox.AddAttribute(cellRenderer, "text", 0);
+		while(dataReader.Read())
+			listStore.AppendValues(dataReader["id"].ToString(), dataReader["nombre"].ToString());
 		
-		CellRenderer  cellRenderer2 = new CellRendererText();
-		comboBox.PackStart(cellRenderer2, false); //expand = false
-		comboBox.AddAttribute(cellRenderer2, "text", 1);*/
 
-
-//		Type[] types = GetTypes(typeof(string), dataReader.FieldCount);
-//		ListStore listStore = new ListStore(types);
-//		comboBox.Model = listStore;
-
-		listStore = new ListStore(typeof(string), typeof(string));
-		comboBox.Model = listStore;
-
-		////////////////////////////
-//		 List<string> values = new List<string>();
-//		 while(dataReader.Read()){
-//			for(int index = 0; index < dataReader.FieldCount; index++)
-//				values.Add(dataReader[index].ToString());
-//		}
-		///////////////////////////
-
-		listStore.AppendValues("1", "Uno");
-		listStore.AppendValues("2", "Dos");
-		
-		comboBox.Changed += delegate {showItemSelected(listStore);};
 
 		dataReader.Close();
 		dbConnection.Close();
 	
 	}
-		
 	
 	private void showItemSelected(ListStore listStore){
 			Console.WriteLine("Evento activado");
