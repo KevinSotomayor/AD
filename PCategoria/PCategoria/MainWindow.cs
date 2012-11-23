@@ -6,9 +6,7 @@ using System.Collections.Generic;
 
 public partial class MainWindow: Gtk.Window
 {	
-		private ListStore listStore;
-		TextBuffer buffer ;
-		
+		private ListStore listStore;		
 
 	public MainWindow (): base (Gtk.WindowType.Toplevel)
 	{
