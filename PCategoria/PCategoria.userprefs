@@ -2,8 +2,21 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
   <MonoDevelop.Ide.Workbench ActiveDocument="PCategoria/MainWindow.cs">
     <Files>
-      <File FileName="PCategoria/MainWindow.cs" Line="58" Column="16" />
+      <File FileName="PCategoria/MainWindow.cs" Line="27" Column="3" />
     </Files>
+    <Pads>
+      <Pad Id="ConnectionManagerPad">
+        <State expanded="True" selected="True">
+          <Node name="dbprueba" expanded="True">
+            <Node name="Tablas" expanded="True">
+              <Node name="categoria" expanded="True">
+                <Node name="Columnas" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

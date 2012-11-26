@@ -26,31 +26,6 @@ public partial class MainWindow: Gtk.Window
 		dataReader = dbCommand.ExecuteReader();
 		TreeViewExtensions.Fill(treeView, dataReader);
 		dataReader.Close();
-
-		//List<Type> types = new List<Type>(); -> OTRO METODO 
-		
-	//	for (int index =0; index < dataReader.FieldCount; index++) -> OTRO METODO
-			//treeView.AppendColumn(dataReader.GetName(index), new CellRendererText(), "text", index);
-		
-		//types.Add(typeof(string));
-		
-		//TreeViewExtensions.AppendColumns(treeView, dataReader);
-		
-	//	Type[] types = TypeExtensions.GetTypes(typeof(string), dataReader.FieldCount);
-	//	ListStore listStore = new ListStore(types);
-	//	treeView.Model = listStore;
-	
-		/*while(dataReader.Read()){
-			List<string> values = new List<string>();
-			for(int index = 0; index < dataReader.FieldCount; index++)
-				values.Add(dataReader[index].ToString());
-			
-			listStore.AppendValues(values.ToArray());
-		}*/
-		
-		//ListStoreExtensions.Fill(listStore, dataReader);
-		
-	//	dataReader.Close();
 		dbConnection.Close();
 	}
 	
