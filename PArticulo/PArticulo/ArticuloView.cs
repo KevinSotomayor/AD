@@ -1,3 +1,4 @@
+using Gtk;
 using System;
 
 namespace PArticulo
@@ -8,6 +9,18 @@ namespace PArticulo
 				base(Gtk.WindowType.Toplevel)
 		{
 			this.Build ();
+		}
+
+		public string Nombre {
+			set {entryNombre.Text = value;}
+		}
+
+		public double Precio {
+			set {spinButtonPrecio.Value=value;}
+		}
+
+		public long Categoria{
+			set {/*TODO implementar...*/}
 		}
 	}
 }

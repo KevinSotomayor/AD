@@ -51,6 +51,8 @@ public partial class MainWindow: Gtk.Window
 	protected void OnEditActionActivated (object sender, EventArgs e)
 	{
 		ArticuloView articuloView = new ArticuloView();
+		articuloView.Nombre="Introduce el nombre";
+		articuloView.Precio=1.5;
 		articuloView.Show();
 	}
 
