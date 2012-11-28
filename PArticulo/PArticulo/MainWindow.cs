@@ -17,7 +17,14 @@ public partial class MainWindow: Gtk.Window
 		dbConnection.Open();
 		
 		IDbCommand dbCommand = dbConnection.CreateCommand();
-		dbCommand.CommandText="select * from articulo";
+		dbCommand.CommandText=	"select a.id, a.nombre, a.precio, c.nombre as Categoria " +
+								"from articulo a left join categoria c " +
+								"on a.categoria = c.id";
+				//Inner join = union interna 
+				//left join, muestra todos los articulos de la tabla de la izquierda y los de la derecha solo los que cumplen la condicion ON
+				//right join, muestra todos los articulos de la tabla de la derecha y los de la izquierda solo los que cumplen la condicion ON
+				//full join, muestra todos los de la derecha y todos los de la izquierda.
+				//el full lo tiene solo postgreesql, mysql NO!
 		IDataReader dataReader = dbCommand.ExecuteReader();
 		
 		TreeViewExtensions.Fill(treeView, dataReader);
