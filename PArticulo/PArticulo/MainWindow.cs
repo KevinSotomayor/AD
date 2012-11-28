@@ -48,4 +48,10 @@ public partial class MainWindow: Gtk.Window
 		ListStore listStore = (ListStore)treeView.Model;
 		listStore.Clear();
 	}
+	protected void OnEditActionActivated (object sender, EventArgs e)
+	{
+		ArticuloView articuloView = new ArticuloView();
+		articuloView.Show();
+	}
+
 }
