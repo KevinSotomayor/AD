@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{2B3F1FD4-1A03-4952-94F1-50284B2264CF}</ProjectGuid>
+    <ProjectGuid>{56AE9B8C-A77F-48A8-8059-DA36391E7E1B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>PArticulo</RootNamespace>
     <AssemblyName>PArticulo</AssemblyName>
@@ -74,11 +74,12 @@
     <Compile Include="ArticuloView.cs" />
     <Compile Include="gtk-gui\PArticulo.ArticuloView.cs" />
     <Compile Include="AplicationContext.cs" />
+    <Compile Include="gtk-gui\Serpis.Ad.AplicationContext.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\PGtkSerpis\PGtkSerpis.csproj">
-      <Project>{33F61607-2CE3-4227-B815-5BABBDBC981D}</Project>
+      <Project>{91BDA740-CBAA-4C13-AD30-C1514964B0D3}</Project>
       <Name>PGtkSerpis</Name>
     </ProjectReference>
   </ItemGroup>

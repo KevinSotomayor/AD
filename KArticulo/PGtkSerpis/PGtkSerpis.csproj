@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{33F61607-2CE3-4227-B815-5BABBDBC981D}</ProjectGuid>
+    <ProjectGuid>{91BDA740-CBAA-4C13-AD30-C1514964B0D3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Serpis.Ad</RootNamespace>
     <AssemblyName>PGtkSerpis</AssemblyName>
@@ -30,16 +30,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
       <Private>False</Private>
       <Package>gtk-sharp-2.0</Package>
     </Reference>
+    <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MyClass.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="ListStoreExtensions.cs" />
     <Compile Include="TreeViewExtensions.cs" />
+    <Compile Include="ListStoreExtensions.cs" />
     <Compile Include="TypeExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
