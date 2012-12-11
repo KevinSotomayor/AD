@@ -1,0 +1,129 @@
+using System;
+using System.Data;
+using System.Collections.Generic; // para list<>
+using Npgsql;
+
+//Comentarios para entender el programa
+
+public class PDbprueba
+{
+	public static void Main(string[] args){
+	
+		// NpgsqlConnection o IDbConnection(interfaz) connection = new NpgsqlConnection("""Cadena de conexion(depende de la bd que nos vamos a conectar)""");
+		//Se usa el objeto de la clase npgsqlConnection ya que estamos trabajando con una base de datos en postgresql
+		NpgsqlConnection connection = new NpgsqlConnection("Server=localhost;" +
+			"Database=dbprueba;" +
+			"User Id= dbprueba;"+
+			"Password = root;");
+
+		connection.Open();
+		Console.WriteLine("Empezamos a abrir la conexion.");
+		//Todo el trabajo hacia la base de datos:
+		IDbCommand command = connection.CreateCommand();
+		command.CommandText=("select * from prueba");
+		IDataReader dataReader = command.ExecuteReader();//Una de las maneras de ejecutar los comandos sql->Devuelve un lector, no lee ningun registro
+		//Una vez ejecutado el ExecuteReader, con las columnas SOLO. (ID, NOMBRE) Pero ningun registro.
+		//Devuelve un IDataReader.
+		
+		//IDataReader -> Nos da las columnas, solo metadatos. y por cada read los datos que sea.
+		showColumnNames(dataReader);
+		///Con el de arriba ya se el nombre y tipo de las columnas: dataReader.FieldCount
+		//dataReader.GetName(i); dataReader.GetType(i)....
+
+		Console.WriteLine("\nVa a entrar al bucle\n");
+ 		while(dataReader.Read()) {
+			//Devuelve true si queda algun registro por leer y al contrario false.
+			//Siempre devolverá false cuando no quede ningun registro por leer.
+			//dataReader.Read() -> Hace un getData, 
+			showValues(dataReader);
+		};
+			
+
+//		Aqui accedo a fila actual(la que se lee en ese momento)
+//	    dataReader["id"].
+//		Console.WriteLine("Prueba de que esta entrando en el bucle");
+//		dataReader["nombre"].	
+//		dataReader.GetValue(0);
+//		El valor del id en la tabla, eso devuelve.
+		dataReader.Close();
+		connection.Close();
+		Console.WriteLine("Fin de la conexion.");
+
+	
+		
+	}
+	
+ 				/*** ****** MÉTODOS ***** ***/
+	private static void showValues(IDataReader dataReader){
+		for ( int i =0; i < dataReader.FieldCount; i ++){
+		    object value = dataReader.GetValue(i);
+			//dataReader.getValue devuelvee el valor de la primera columna., y si le especificas otro la siguiiente columna.
+			Console.WriteLine("Index={0} value={1} type={2}", i, value, value.GetType());
+		}
+	}
+	
+	
+	
+	private static void showColumnNames(IDataReader dataReader){
+	//for(int i=0; i < dataReader.FieldCount; i++)
+			//Console.WriteLine("Index ={0} Columna={1}", i, dataReader.GetName(i));
+		string[] columnNames = getColumnNames(dataReader);  //¿Porque es pasado como parámetro?
+		//Que papel juega dataReader al ser pasado como parámetro, que pasaría si no estuviese, es obligatorio poner un IDataReader?
+		foreach ( string name in columnNames)
+			Console.WriteLine("Column={0}", name);
+		//For each es como un for, va pasando por cada elemento.
+	}	
+	
+	private static string[] getColumnNames(IDataReader dataReader){
+		//  Listas dinamicas.
+		List<string> names = new List<string>();
+		for(int index = 0; index<dataReader.FieldCount; index ++)
+			//FieldCount devuelve las columnas.
+			//hay otros metodos que aplicados al data reader devuelven otras cosas como el nombre, dataReader.GetName();
+			names.Add(dataReader.GetName(index));
+		return names.ToArray();
+	}
+	
+	
+//	private static string[] getColumnNames(IDataReader dataReader){
+//		string[] names = new string[ dataReader.FieldCount ];
+//		for(int i = 0; i < dataReader.FieldCount; i++)
+//			names[ i ] = dataReader.GetName(i);
+//		return names;
+//	
+//	}
+};
+
+//Clases:
+/*Npqsqlconnection
+ * --Open
+ * --CreateCommand (Devuelve un IDbCommand)
+ * --Close
+ * 
+ * 
+ * IDbCommand
+ * --CommandText <- "Select *..."
+ *--ExcecuteReader(Solo cuando lo que se consulta es un SELECT) <- IDataReader
+ *--ExcecuteNonQuery (No devuelve un lector, sino un numero(numero de filas afectadas))
+ *
+ *
+ * ---------metainformacion--------------NO LEEEMOS REGISTROS
+ *IDataReader(cuando necesitamos hacer una lectura)(Nos permite saber cuantas hay y de que tipo son cada columna.)
+ *--FieldCount
+ *--GetName(--Numerito(int)(-0 el nombre de la primera columna))
+ *--GetType(--devuelve numerito(int))
+ *
+ *
+ *Read() --El que nos permite leer, el que debemos meter en el ciclo--
+ *while(Read()--... Y entrará en el ciclo si es True, si hay que leer...)
+ *
+ *-------FORMAS DE ACCEDER A UN CAMPO:
+ *["id"] -> Entre corchetes
+ *["nombre"]
+ *.GetValue("id")-> dataReader.GetValue(0) -> Devuelve objetos->Objetcs.
+ *.
+ *.Cada dataReader hay que cerrarlo
+ *.-------------------------------_ Para hacer referencias, hacer click en 
+ *------------------------- Referencias (click derecho)
+ *-------------------Elegir los paquetes referenciados.
+ */

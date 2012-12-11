@@ -1,0 +1,110 @@
+using System;
+using Gtk;
+//declaro un tipo
+//public delegate int MyFunction(int a, int b);
+/*****************************************/
+
+public partial class MainWindow: Gtk.Window
+{	
+	private ListStore listStore;
+	//Evento:
+	//public event MyFunction NombreDelEvento;
+	
+	public MainWindow (): base (Gtk.WindowType.Toplevel)
+	{
+		Build ();
+///////////////////////////////////////////////////////////////////*		
+//		MyFunction f;
+//		MyFunction[] funtions = new MyFunction[]{suma, resta, multiplica};
+//		int random = new Random().Next(2);
+//		f = funtions[random];
+//		Console.WriteLine("F={0}", f(5,3));
+/////////////////////////////////////////////////////* Ejecutar varios metodos a la vez.		
+		
+		
+		//comboBox.Active = 0;
+		CellRenderer  cellRenderer = new CellRendererText();
+		comboBox.PackStart(cellRenderer, false); //expand = false
+		comboBox.AddAttribute(cellRenderer, "text", 0);
+		
+		CellRenderer  cellRenderer2 = new CellRendererText();
+		comboBox.PackStart(cellRenderer2, false); //expand = false
+		comboBox.AddAttribute(cellRenderer2, "text", 1);
+		
+		listStore = new ListStore(typeof(string), typeof(string));
+		comboBox.Model = listStore;
+		
+		listStore.AppendValues("1", "uno");
+		listStore.AppendValues("2", "dos");
+	
+		
+		/// Evento cuando se toca el comboBox
+		/// con += se pueden añadir varios metodos a un solo evento.
+		/// se ejecutaran en el orden que hayan sido asociados.
+		comboBox.Changed += delegate {
+			Console.WriteLine("Evento activado");
+//		
+//			//devolver elemento seleccionado:
+//			/// Devuelve el iterador activo -> LOL 
+//			/// Iterador activo: 
+			TreeIter treeIter;
+			if (comboBox.GetActiveIter(out treeIter) ){ // item seleccionado.
+				object value =listStore.GetValue(treeIter, 0);
+				Console.WriteLine("ComboBox.changed id={0}", value);
+			}
+		};
+		
+		comboBox.Changed += comboBoxChanged;
+		
+		comboBox.Changed += delegate {
+			showItemSelected(listStore);
+		};
+	}
+	
+		private void showItemSelected(ListStore listStore){
+			Console.WriteLine("Evento activado");
+			TreeIter treeIter;
+			if (comboBox.GetActiveIter(out treeIter) ){
+				object value =listStore.GetValue(treeIter, 0);
+				Console.WriteLine("ComboBoxChanged id={0}", value);
+   			}
+		
+	}
+	
+	
+///////////////////////////////////////////////////* Metodos para explicar los delegados, declarados arriba como tipos.	
+//	private int suma(int a, int b){
+//	 	return a + b;
+//	}
+//	
+//	
+//		private int resta(int a, int b){
+//	 	return a - b;
+//	}
+//	
+//		private int multiplica(int a, int b){
+//	 	return a * b;
+//	}
+///////////////////////////////////////////////////////////////	
+	
+	
+	//Tiene que tener esos parametros para que funcione al añadirlo como evento:
+	private void comboBoxChanged(object obj, EventArgs args){
+			Console.WriteLine("Evento activado");
+			TreeIter treeIter;
+			if (comboBox.GetActiveIter(out treeIter) ){
+				object value =listStore.GetValue(treeIter, 0);
+				Console.WriteLine("ComboBoxChanged id={0}", value);
+   			}
+		
+	}
+	
+	
+	
+	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
+	{
+		Application.Quit ();
+		a.RetVal = true;
+	}
+}
+

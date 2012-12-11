@@ -1,0 +1,36 @@
+//Que lea de la tabla de artículo.
+
+/*
+->Tabla categoría
+id big serial primary key
+nombre not null unique 
+
+
+-> Tabla artículo
+id
+nombre
+precio not null 10,3(diez enteros y 3 decimales.)
+categoría, foreing key de categoría.*/
+
+create table categoria (
+	id bigserial primary key,
+	nombre varchar (50) not null unique
+);
+
+
+create table articulo(
+	id bigserial primary key,
+	nombre varchar(50) not null unique,
+	precio numeric(10, 2) not null,
+	categoria bigint references categoria (id)
+);
+
+
+insert into categoria (nombre) values ('categoria uno');
+insert into categoria (nombre) values ('categoria dos');
+insert into categoria (nombre) values ('categoria tres');
+
+insert into articulo (nombre, precio, categoria) values ('art. uno', 1.5, 1);
+insert into articulo (nombre, precio, categoria) values ('art. dos', 2, 2);
+insert into articulo (nombre, precio, categoria) values ('art. tres', 3, 3);
+insert into articulo (nombre, precio) values ('art. cuatro', 4);
