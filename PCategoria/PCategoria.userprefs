@@ -1,16 +1,15 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="PCategoria/MainWindow.cs">
-    <Files>
-      <File FileName="PCategoria/MainWindow.cs" Line="27" Column="3" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ConnectionManagerPad">
-        <State expanded="True" selected="True">
-          <Node name="dbprueba" expanded="True">
+        <State expanded="True">
+          <Node name="Localhost dbprueba" expanded="True">
             <Node name="Tablas" expanded="True">
               <Node name="categoria" expanded="True">
-                <Node name="Columnas" expanded="True" />
+                <Node name="Columnas" expanded="True">
+                  <Node name="Columna" selected="True" />
+                </Node>
               </Node>
             </Node>
           </Node>

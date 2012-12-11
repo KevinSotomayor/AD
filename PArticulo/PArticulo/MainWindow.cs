@@ -1,59 +1,68 @@
 using Gtk;
 using Npgsql;
-using PArticulo; //-> Utilizara las clases de Particulo
+using PArticulo;
 using Serpis.Ad;
 using System;
+using System.Collections.Generic;
 using System.Data;
-using System.Collections.Generic; 
+
 
 public partial class MainWindow: Gtk.Window
 {	
+	//private IDbConnection dbConnection;
+
 	public MainWindow (): base (Gtk.WindowType.Toplevel)
 	{
 		Build ();
-
+		
 		string connectionString = "Server=localhost;Database=dbprueba;User Id=dbprueba;Password=root";
-		IDbConnection dbConnection = new NpgsqlConnection(connectionString);
-		dbConnection.Open();
+		//dbConnection = new NpgsqlConnection(connectionString);
+		AplicationDbContext.Instance.DbConnection = new NpgsqlConnection(connectionString);
+		AplicationDbContext.Instance.DbConnection.Open ();
 		
-		IDbCommand dbCommand = dbConnection.CreateCommand();
-		dbCommand.CommandText=	"select a.id, a.nombre, a.precio, c.nombre as Categoria " +
-								"from articulo a left join categoria c " +
-								"on a.categoria = c.id";
-				//Inner join = union interna 
-				//left join, muestra todos los articulos de la tabla de la izquierda y los de la derecha solo los que cumplen la condicion ON
-				//right join, muestra todos los articulos de la tabla de la derecha y los de la izquierda solo los que cumplen la condicion ON
-				//full join, muestra todos los de la derecha y todos los de la izquierda.
-				//el full lo tiene solo postgreesql, mysql NO!
-		IDataReader dataReader = dbCommand.ExecuteReader();
+		IDbCommand dbCommand = AplicationDbContext.Instance.DbConnection.CreateCommand ();
+		dbCommand.CommandText = 
+			"select a.id, a.nombre, a.precio, c.nombre as categoria " +
+			"from articulo a left join categoria c " +
+			"on a.categoria = c.id";
 		
-		TreeViewExtensions.Fill(treeView, dataReader);
-		dataReader.Close();
+		IDataReader dataReader = dbCommand.ExecuteReader ();
 		
-		dataReader = dbCommand.ExecuteReader();
-		TreeViewExtensions.Fill(treeView, dataReader);
-		dataReader.Close();
-		dbConnection.Close();
+		TreeViewExtensions.Fill (treeView, dataReader);
+		dataReader.Close ();
+		
+		dataReader = dbCommand.ExecuteReader ();
+		TreeViewExtensions.Fill (treeView, dataReader);
+		dataReader.Close ();
+		
 	}
 	
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
 	{
+		AplicationDbContext.Instance.DbConnection.Close ();
+
 		Application.Quit ();
 		a.RetVal = true;
 	}
 
-
 	protected void OnClearActionActivated (object sender, System.EventArgs e)
 	{
 		ListStore listStore = (ListStore)treeView.Model;
-		listStore.Clear();
-	}
-	protected void OnEditActionActivated (object sender, EventArgs e)
-	{
-		ArticuloView articuloView = new ArticuloView();
-		articuloView.Nombre="Introduce el nombre";
-		articuloView.Precio=1.5;
-		articuloView.Show();
+		listStore.Clear ();
 	}
 
+	protected void OnEditActionActivated (object sender, System.EventArgs e){
+
+		long id = getSelectedId();
+		ArticuloView articuloView = new ArticuloView(id);
+		articuloView.Show ();
+	}
+	
+	private long getSelectedId() {
+		TreeIter treeIter;
+		treeView.Selection.GetSelected(out treeIter);
+		
+		ListStore listStore = (ListStore)treeView.Model;
+		return long.Parse (listStore.GetValue (treeIter, 0).ToString ()); 
+	}
 }
