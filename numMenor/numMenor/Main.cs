@@ -11,14 +11,14 @@ namespace numMenor
 
 			
         for(int i = 0; i < lis.Length; i++) {
-            Console.WriteLine("Numeros que esta dentro: " + lis[i]);
+            Console.WriteLine("Numeros que estan dentro: " + lis[i]);
         }
         /*******************************************/
          int me = menor(lis);
          Console.WriteLine("\nEl menor es: " + me);
        /*************************************************/ 
         
-			int pos = posicion(lis, 1114);
+			int pos = posicion(lis, 14);
         Console.WriteLine("La posicion es: " + pos);
         /**************************************************/
        //  int[] lisOrdenada = {4, 3, 2, 14, 55, 19, 33};

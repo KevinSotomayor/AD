@@ -1,14 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="PGtk/MainWindow.cs">
-    <Files>
-      <File FileName="PGtk/Main.cs" Line="18" Column="1" />
-      <File FileName="PGtk/MainWindow.cs" Line="17" Column="2" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
-        <State expanded="True" selected="True">
-          <Node name="PGtk" expanded="True" />
+        <State expanded="True">
+          <Node name="PGtk" expanded="True">
+            <Node name="MainWindow.cs" selected="True" />
+          </Node>
         </State>
       </Pad>
     </Pads>
