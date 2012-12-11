@@ -10,8 +10,7 @@ namespace PArticulo
 		public ArticuloView (long id) : base(Gtk.WindowType.Toplevel)
 		{
 			this.Build ();
-
-				IDbCommand dbCommand = AplicationDbContext.Instance.DbConnection.CreateCommand();
+			IDbCommand dbCommand = AplicationDbContext.Instance.DbConnection.CreateCommand();
 				//dbCommand.CommandText = "select * from articulo where id="+id;
 				dbCommand.CommandText = string.Format ("select * from articulo where id={0}", id);
 		//		dbCommand.CommandText = "select * from articulo where id=:id";
@@ -30,30 +29,37 @@ namespace PArticulo
 				
 				dataReader.Close ();
 
-				saveAction.Activated += delegate {
-			
-					Console.WriteLine("articuloView.SaveAction.Activated");
-					
-					IDbCommand dbUpdateCommand = AplicationDbContext.Instance.DbConnection.CreateCommand ();
-					dbUpdateCommand.CommandText = "update articulo set nombre=:nombre, precio=:precio where id=:id";
-					
-					AddParameter (dbUpdateCommand, "nombre", entryNombre.Text);
-					AddParameter (dbUpdateCommand, "precio", Convert.ToDecimal(spinButtonPrecio.Value));
-					AddParameter (dbUpdateCommand, "id", id);
-					
-		//			Si usamos sustitución de cadenas tendremos problemas con:
-		//			los "'" en los string, las "," en los decimal y el formato de las fechas
-		//			dbUpdateCommand.CommandText = 
-		//				String.Format ("update articulo set nombre='{0}', precio={1} where id={2}", 
-		//				               articuloView.Nombre, articuloView.Precio, id);
-
-					dbUpdateCommand.ExecuteNonQuery ();
-					
-					this.Destroy ();
-				};
-
+//				saveAction2.Activated += delegate {
+//			
+//					Console.WriteLine("articuloView.SaveAction.Activated");
+//					
+//					IDbCommand dbUpdateCommand = AplicationDbContext.Instance.DbConnection.CreateCommand ();
+//					dbUpdateCommand.CommandText = "update articulo set nombre=:nombre, precio=:precio where id=:id";
+//					
+//					AddParameter (dbUpdateCommand, "nombre", entryNombre.Text);
+//					AddParameter (dbUpdateCommand, "precio", Convert.ToDecimal(spinButtonPrecio.Value));
+//					AddParameter (dbUpdateCommand, "id", id);
+//					
+//		//			Si usamos sustitución de cadenas tendremos problemas con:
+//		//			los "'" en los string, las "," en los decimal y el formato de las fechas
+//		//			dbUpdateCommand.CommandText = 
+//		//				String.Format ("update articulo set nombre='{0}', precio={1} where id={2}", 
+//		//				               articuloView.Nombre, articuloView.Precio, id);
+//
+//					dbUpdateCommand.ExecuteNonQuery ();
+//					
+//					this.Destroy ();
+			//	};
 		}
-			
+		
+		//obtener id seleccionado
+		/* 
+		 * long id = ... ; obtener el id seleccionado
+		 * 
+		 * 		"select * from articulo
+		 * 		where id = []"
+		 * */
+
 		public static void AddParameter(IDbCommand dbCommand, string name, object value)
 		{
 			IDbDataParameter dbDataParameter = dbCommand.CreateParameter();
@@ -62,26 +68,31 @@ namespace PArticulo
 			dbCommand.Parameters.Add (dbDataParameter);
 		}
 
-		
-		public string Nombre { 
+		public string Nombre {
 			get {return entryNombre.Text;}
-			set {entryNombre.Text = value;} 
+			set {entryNombre.Text = value;}
+			
 		}
-		
+
 		public decimal Precio {
 			get {return Convert.ToDecimal (spinButtonPrecio.Value);}
 			set {spinButtonPrecio.Value = Convert.ToDouble(value);}
 		}
-		
-		public long Categoria {
-			set {
-				//TODO implementar...
-			}
+
+		public long Categoria{
+			set {/*TODO implementar...*/}
 		}
-		
+
+//		protected void OnSaveActionActivated (object sender, EventArgs e)
+//		{
+//			throw new System.NotImplementedException ();
+//		}
+
 		public Gtk.Action SaveAction {
 			get {return saveAction;}
 		}
+
+		
 	}
 }
 

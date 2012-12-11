@@ -5,21 +5,19 @@ namespace Serpis.Ad
 {
 	public class AplicationDbContext
 	{
-		public AplicationDbContext (){
-		}
+		public AplicationDbContext ()	{
+			}
+			
+			private static AplicationDbContext instance = new AplicationDbContext();
 
-		private static AplicationDbContext instance = new AplicationDbContext();
+			public static AplicationDbContext Instance {
+				get{return instance;}
+			}
 
-		public static AplicationDbContext Instance {
-			get{return instance;}
-		}
-
-		private IDbConnection dbConnection;
-		public IDbConnection DbConnection{
-			get {return dbConnection;}
-			set {dbConnection = value;}
-		}
-
+			private IDbConnection dbConnection;
+			public IDbConnection DbConnection{
+				get{ return dbConnection; }
+				set{ dbConnection = value; }
+			}
 	}
 }
-
