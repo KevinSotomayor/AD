@@ -131,7 +131,6 @@ namespace PArticulo
 			this.DefaultWidth = 310;
 			this.DefaultHeight = 221;
 			this.Show ();
-
 		}
 	}
 }

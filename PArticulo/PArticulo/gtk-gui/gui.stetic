@@ -80,7 +80,6 @@
         <property name="Label" translatable="yes">_Guardar</property>
         <property name="ShortLabel" translatable="yes">_Guardar</property>
         <property name="StockId">gtk-save</property>
-        <signal name="Activated" handler="OnSaveActionActivated" />
       </action>
     </action-group>
     <property name="MemberName" />

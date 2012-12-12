@@ -10,6 +10,7 @@ using System.Data;
 public partial class MainWindow: Gtk.Window
 {	
 	//private IDbConnection dbConnection;
+	private IDbConnection dbConection;
 
 	public MainWindow (): base (Gtk.WindowType.Toplevel)
 	{
@@ -17,10 +18,11 @@ public partial class MainWindow: Gtk.Window
 		
 		string connectionString = "Server=localhost;Database=dbprueba;User Id=dbprueba;Password=root";
 		//dbConnection = new NpgsqlConnection(connectionString);
-		AplicationDbContext.Instance.DbConnection = new NpgsqlConnection(connectionString);
-		AplicationDbContext.Instance.DbConnection.Open ();
+		AplicationContext.Instance.DbConnection = new NpgsqlConnection(connectionString);
+		dbConection = AplicationContext.Instance.DbConnection;
+		dbConection.Open ();
 
-		IDbCommand dbCommand = AplicationDbContext.Instance.DbConnection.CreateCommand ();
+		IDbCommand dbCommand = dbConection.CreateCommand ();
 		dbCommand.CommandText = 
 			"select a.id, a.nombre, a.precio, c.nombre as categoria " +
 			"from articulo a left join categoria c " +
@@ -39,7 +41,7 @@ public partial class MainWindow: Gtk.Window
 	
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
 	{
-		AplicationDbContext.Instance.DbConnection.Close ();
+		AplicationContext.Instance.DbConnection.Close ();
 
 		Application.Quit ();
 		a.RetVal = true;

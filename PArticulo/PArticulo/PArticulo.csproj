@@ -73,13 +73,16 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="ArticuloView.cs" />
     <Compile Include="gtk-gui\PArticulo.ArticuloView.cs" />
-    <Compile Include="AplicationContext.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\PGtkSerpis\PGtkSerpis.csproj">
       <Project>{33F61607-2CE3-4227-B815-5BABBDBC981D}</Project>
       <Name>PGtkSerpis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PAdSerpis\PAdSerpis.csproj">
+      <Project>{9BC8C4EC-4F85-4DBD-B6D7-D5D01A53CF48}</Project>
+      <Name>PAdSerpis</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

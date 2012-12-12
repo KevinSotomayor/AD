@@ -7,11 +7,14 @@ namespace PArticulo
 {
 	public partial class ArticuloView : Gtk.Window
 	{
+		private IDbConnection dbConnection;
 		public ArticuloView (long id) : base(Gtk.WindowType.Toplevel)
 		{
 			this.Build ();
 
-				IDbCommand dbCommand = AplicationDbContext.Instance.DbConnection.CreateCommand();
+			dbConnection = AplicationContext.Instance.DbConnection;
+
+				IDbCommand dbCommand = dbConnection.CreateCommand();
 				//dbCommand.CommandText = "select * from articulo where id="+id;
 				dbCommand.CommandText = string.Format ("select * from articulo where id={0}", id);
 		//		dbCommand.CommandText = "select * from articulo where id=:id";
@@ -34,12 +37,12 @@ namespace PArticulo
 			
 					Console.WriteLine("articuloView.SaveAction.Activated");
 					
-					IDbCommand dbUpdateCommand = AplicationDbContext.Instance.DbConnection.CreateCommand ();
+					IDbCommand dbUpdateCommand = AplicationContext.Instance.DbConnection.CreateCommand ();
 					dbUpdateCommand.CommandText = "update articulo set nombre=:nombre, precio=:precio where id=:id";
 					
-					AddParameter (dbUpdateCommand, "nombre", entryNombre.Text);
-					AddParameter (dbUpdateCommand, "precio", Convert.ToDecimal(spinButtonPrecio.Value));
-					AddParameter (dbUpdateCommand, "id", id);
+					DbCommandExtensions.AddParameter (dbUpdateCommand, "nombre", entryNombre.Text);
+					DbCommandExtensions.AddParameter (dbUpdateCommand, "precio", Convert.ToDecimal(spinButtonPrecio.Value));
+					DbCommandExtensions.AddParameter (dbUpdateCommand, "id", id);
 					
 		//			Si usamos sustitución de cadenas tendremos problemas con:
 		//			los "'" en los string, las "," en los decimal y el formato de las fechas
@@ -54,13 +57,7 @@ namespace PArticulo
 
 		}
 			
-		public static void AddParameter(IDbCommand dbCommand, string name, object value)
-		{
-			IDbDataParameter dbDataParameter = dbCommand.CreateParameter();
-			dbDataParameter.ParameterName = name;
-			dbDataParameter.Value = value;
-			dbCommand.Parameters.Add (dbDataParameter);
-		}
+
 
 		
 		public string Nombre { 

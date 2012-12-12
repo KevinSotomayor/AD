@@ -3,14 +3,14 @@ using System.Data;
 
 namespace Serpis.Ad
 {
-	public class AplicationDbContext
+	public class AplicationContext
 	{
-		public AplicationDbContext (){
+		public AplicationContext (){
 		}
 
-		private static AplicationDbContext instance = new AplicationDbContext();
+		private static AplicationContext instance = new AplicationContext();
 
-		public static AplicationDbContext Instance {
+		public static AplicationContext Instance {
 			get{return instance;}
 		}
 
