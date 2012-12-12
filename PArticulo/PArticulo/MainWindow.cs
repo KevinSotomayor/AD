@@ -10,7 +10,7 @@ using System.Data;
 public partial class MainWindow: Gtk.Window
 {	
 	//private IDbConnection dbConnection;
-	private IDbConnection dbConection;
+	private IDbConnection dbConnection;
 
 	public MainWindow (): base (Gtk.WindowType.Toplevel)
 	{
@@ -19,10 +19,10 @@ public partial class MainWindow: Gtk.Window
 		string connectionString = "Server=localhost;Database=dbprueba;User Id=dbprueba;Password=root";
 		//dbConnection = new NpgsqlConnection(connectionString);
 		AplicationContext.Instance.DbConnection = new NpgsqlConnection(connectionString);
-		dbConection = AplicationContext.Instance.DbConnection;
-		dbConection.Open ();
+		dbConnection = AplicationContext.Instance.DbConnection;
+		dbConnection.Open ();
 
-		IDbCommand dbCommand = dbConection.CreateCommand ();
+		IDbCommand dbCommand = dbConnection.CreateCommand ();
 		dbCommand.CommandText = 
 			"select a.id, a.nombre, a.precio, c.nombre as categoria " +
 			"from articulo a left join categoria c " +
