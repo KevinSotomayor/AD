@@ -1,17 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="PArticulo/gtk-gui/PArticulo.ArticuloView.cs">
-    <Files>
-      <File FileName="PArticulo/MainWindow.cs" Line="22" Column="1" />
-      <File FileName="PArticulo/ArticuloView.cs" Line="84" Column="4" />
-      <File FileName="PArticulo/gtk-gui/PArticulo.ArticuloView.cs" Line="134" Column="1" />
-    </Files>
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
+          <Node name="PAdSerpis" expanded="True" />
           <Node name="PArticulo" expanded="True">
             <Node name="MainWindow.cs" selected="True" />
           </Node>
+          <Node name="PGtkSerpis" expanded="True" />
         </State>
       </Pad>
       <Pad Id="ConnectionManagerPad">

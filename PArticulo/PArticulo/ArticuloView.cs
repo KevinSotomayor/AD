@@ -14,51 +14,79 @@ namespace PArticulo
 
 			dbConnection = AplicationContext.Instance.DbConnection;
 
-				IDbCommand dbCommand = dbConnection.CreateCommand();
-				//dbCommand.CommandText = "select * from articulo where id="+id;
-				dbCommand.CommandText = string.Format ("select * from articulo where id={0}", id);
-		//		dbCommand.CommandText = "select * from articulo where id=:id";
-		//		IDbDataParameter dbDataParameter = dbCommand.CreateParameter();
-		//		dbCommand.Parameters.Add (dbDataParameter);
-		//		dbDataParameter.ParameterName = "id";
-		//		dbDataParameter.Value = id;
-				
-				IDataReader dataReader = dbCommand.ExecuteReader ();
-				dataReader.Read ();
-				
-				entryNombre.Text = (string)dataReader["nombre"];
-				spinButtonPrecio.Value = Convert.ToDouble((decimal)dataReader["precio"]);
-				
-				Show ();
-				
-				dataReader.Close ();
 
-				saveAction.Activated += delegate {
-			
-					Console.WriteLine("articuloView.SaveAction.Activated");
-					
-					IDbCommand dbUpdateCommand = AplicationContext.Instance.DbConnection.CreateCommand ();
-					dbUpdateCommand.CommandText = "update articulo set nombre=:nombre, precio=:precio where id=:id";
-					
-					DbCommandExtensions.AddParameter (dbUpdateCommand, "nombre", entryNombre.Text);
-					DbCommandExtensions.AddParameter (dbUpdateCommand, "precio", Convert.ToDecimal(spinButtonPrecio.Value));
-					DbCommandExtensions.AddParameter (dbUpdateCommand, "id", id);
-					
-		//			Si usamos sustitución de cadenas tendremos problemas con:
-		//			los "'" en los string, las "," en los decimal y el formato de las fechas
-		//			dbUpdateCommand.CommandText = 
-		//				String.Format ("update articulo set nombre='{0}', precio={1} where id={2}", 
-		//				               articuloView.Nombre, articuloView.Precio, id);
-
-					dbUpdateCommand.ExecuteNonQuery ();
-					
-					this.Destroy ();
-				};
+			if (id  == 0) // nuevo
+				nuevo();
+			else
+				editar(id);
 
 		}
 			
+		private void nuevo(){
+			//inicializo los controles que quiera
+			entryNombre.Text = "Pon aqui el nombre";
+			spinButtonPrecio.Value = 1;
+			saveAction.Activated += delegate {
+		
+				Console.WriteLine("Articulo guardado correctamente");
+				
+				IDbCommand dbCommand = AplicationContext.Instance.DbConnection.CreateCommand ();
+				dbCommand.CommandText = "insert into articulo (nombre, precio) values (:nombre, :precio)";
+				
+				DbCommandExtensions.AddParameter (dbCommand, "nombre", entryNombre.Text);
+				DbCommandExtensions.AddParameter (dbCommand, "precio", Convert.ToDecimal(spinButtonPrecio.Value));
+
+				dbCommand.ExecuteNonQuery ();
+				
+				this.Destroy ();
+				};
+
+		}
 
 
+
+		private void editar( long id ) {
+		IDbCommand dbCommand = dbConnection.CreateCommand();
+			//dbCommand.CommandText = "select * from articulo where id="+id;
+			dbCommand.CommandText = string.Format ("select * from articulo where id={0}", id);
+	//		dbCommand.CommandText = "select * from articulo where id=:id";
+	//		IDbDataParameter dbDataParameter = dbCommand.CreateParameter();
+	//		dbCommand.Parameters.Add (dbDataParameter);
+	//		dbDataParameter.ParameterName = "id";
+	//		dbDataParameter.Value = id;
+			
+			IDataReader dataReader = dbCommand.ExecuteReader ();
+			dataReader.Read ();
+			
+			entryNombre.Text = (string)dataReader["nombre"];
+			spinButtonPrecio.Value = Convert.ToDouble((decimal)dataReader["precio"]);
+			
+			Show ();
+			
+			dataReader.Close ();
+
+			saveAction.Activated += delegate {
+		
+				Console.WriteLine("articuloView.SaveAction.Activated");
+				
+				IDbCommand dbUpdateCommand = AplicationContext.Instance.DbConnection.CreateCommand ();
+				dbUpdateCommand.CommandText = "update articulo set nombre=:nombre, precio=:precio where id=:id";
+				
+				DbCommandExtensions.AddParameter (dbUpdateCommand, "nombre", entryNombre.Text);
+				DbCommandExtensions.AddParameter (dbUpdateCommand, "precio", Convert.ToDecimal(spinButtonPrecio.Value));
+				DbCommandExtensions.AddParameter (dbUpdateCommand, "id", id);
+				
+	//			Si usamos sustitución de cadenas tendremos problemas con:
+	//			los "'" en los string, las "," en los decimal y el formato de las fechas
+	//			dbUpdateCommand.CommandText = 
+	//				String.Format ("update articulo set nombre='{0}', precio={1} where id={2}", 
+	//				               articuloView.Nombre, articuloView.Precio, id);
+
+				dbUpdateCommand.ExecuteNonQuery ();
+				
+				this.Destroy ();
+				};
+		}
 		
 		public string Nombre { 
 			get {return entryNombre.Text;}
