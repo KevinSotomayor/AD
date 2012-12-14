@@ -14,8 +14,6 @@ namespace Serpis.Ad
 		
 		public static void Fill(TreeView treeView, IDataReader dataReader) 
 		{
-			treeView.Model = null;	//Para evitar el Gtk-CRITICAL **: IA__gtk_tree_view_get_cell_area: assertion `!column || column->tree_view == (GtkWidget *) tree_view' failed
-									//que lanza al llamar a treeView.RemoveColumn(...)
 			TreeViewExtensions.ClearColumns (treeView);
 			TreeViewExtensions.AppendColumns (treeView, dataReader);		
 			Type[] types = TypeExtensions.GetTypes (typeof(string), dataReader.FieldCount);
@@ -27,6 +25,8 @@ namespace Serpis.Ad
 		
 		public static void ClearColumns(TreeView treeView)
 		{
+			treeView.Model = null;	//Para evitar el Gtk-CRITICAL **: IA__gtk_tree_view_get_cell_area: assertion `!column || column->tree_view == (GtkWidget *) tree_view' failed
+						//que lanza al llamar a treeView.RemoveColumn(...)
 			TreeViewColumn[] treeViewColumns = treeView.Columns;
 			foreach (TreeViewColumn treeViewColumn in treeViewColumns)
 				treeView.RemoveColumn (treeViewColumn);
