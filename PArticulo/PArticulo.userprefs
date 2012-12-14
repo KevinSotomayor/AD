@@ -1,6 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="PArticulo/MainWindow.cs">
+    <Files>
+      <File FileName="PArticulo/MainWindow.cs" Line="38" Column="23" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">

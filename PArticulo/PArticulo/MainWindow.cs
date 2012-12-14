@@ -21,23 +21,37 @@ public partial class MainWindow: Gtk.Window
 		AplicationContext.Instance.DbConnection = new NpgsqlConnection(connectionString);
 		dbConnection = AplicationContext.Instance.DbConnection;
 		dbConnection.Open ();
-
-		IDbCommand dbCommand = dbConnection.CreateCommand ();
+		
+		refresh();
+//		IDbCommand dbCommand = dbConnection.CreateCommand ();
+//		dbCommand.CommandText = 
+//			"select a.id, a.nombre, a.precio, c.nombre as categoria " +
+//			"from articulo a left join categoria c " +
+//			"on a.categoria = c.id";
+//		
+//		IDataReader dataReader = dbCommand.ExecuteReader ();
+//		
+//		TreeViewExtensions.Fill (treeView, dataReader);
+//		dataReader.Close ();
+//		
+//		dataReader = dbCommand.ExecuteReader ();
+//		TreeViewExtensions.Fill (treeView, dataReader);
+//		dataReader.Close ();
+		
+	}
+	
+		private void refresh(){
+		IDbCommand dbCommand = AplicationContext.Instance.DbConnection.CreateCommand ();
 		dbCommand.CommandText = 
 			"select a.id, a.nombre, a.precio, c.nombre as categoria " +
 			"from articulo a left join categoria c " +
 			"on a.categoria = c.id";
 		
 		IDataReader dataReader = dbCommand.ExecuteReader ();
-		
 		TreeViewExtensions.Fill (treeView, dataReader);
 		dataReader.Close ();
-		
-		dataReader = dbCommand.ExecuteReader ();
-		TreeViewExtensions.Fill (treeView, dataReader);
-		dataReader.Close ();
-		
 	}
+	
 	
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
 	{
@@ -53,7 +67,7 @@ public partial class MainWindow: Gtk.Window
 		ListStore listStore = (ListStore)treeView.Model;
 		listStore.Clear ();
 	}
-
+	
 	protected void OnEditActionActivated (object sender, System.EventArgs e){
 
 		long id = getSelectedId();
@@ -87,23 +101,6 @@ public partial class MainWindow: Gtk.Window
 
 	}
 
-	private void refresh(){
-	IDbCommand dbCommand = AplicationContext.Instance.DbConnection.CreateCommand ();
-		dbCommand.CommandText = 
-			"select a.id, a.nombre, a.precio, c.nombre as categoria " +
-			"from articulo a left join categoria c " +
-			"on a.categoria = c.id";
-		
-		IDataReader dataReader = dbCommand.ExecuteReader ();
-		
-		TreeViewExtensions.Fill (treeView, dataReader);
-		dataReader.Close ();
-		
-		dataReader = dbCommand.ExecuteReader ();
-		TreeViewExtensions.Fill (treeView, dataReader);
-		dataReader.Close ();
-	}
-
 
 	protected void OnDeleteActionActivated (object sender, EventArgs e){
 		long id = getSelectedId();
@@ -113,8 +110,8 @@ public partial class MainWindow: Gtk.Window
 
 		DbCommandExtensions.AddParameter (dropCommand, "id", id);
 
-		Console.WriteLine("Articulo borrado correctamente");
 		dropCommand.ExecuteNonQuery();
+		Console.WriteLine("Articulo borrado correctamente");
 
 		refresh();
 	}
