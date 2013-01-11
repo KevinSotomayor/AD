@@ -60,6 +60,13 @@ namespace PArticulo
 			
 			entryNombre.Text = (string)dataReader["nombre"];
 			spinButtonPrecio.Value = Convert.ToDouble((decimal)dataReader["precio"]);
+			object categoriaData = dataReader["categoria"];
+			/*long? categoria = null ; //long? es lo mismo que nullable<long> para objetos que son nulos 
+									 //indicando que categoria ahora es null, tambien valdría
+									//long categoria = 0
+			if(!(categoria is DBNull))
+				categoria = (long)categoriaData;
+			*/
 			
 			Show ();
 			
@@ -83,6 +90,7 @@ namespace PArticulo
 	//				               articuloView.Nombre, articuloView.Precio, id);
 
 				dbUpdateCommand.ExecuteNonQuery ();
+				
 				
 				this.Destroy ();
 				};

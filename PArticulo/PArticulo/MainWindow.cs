@@ -62,11 +62,12 @@ public partial class MainWindow: Gtk.Window
 
 	}
 
-	protected void OnClearActionActivated (object sender, System.EventArgs e)
-	{
-		ListStore listStore = (ListStore)treeView.Model;
-		listStore.Clear ();
-	}
+//	protected void OnClearActionActivated (object sender, System.EventArgs e)
+//	{
+//		ListStore listStore = (ListStore)treeView.Model;
+//		listStore.Clear ();
+//	}
+//	Limpia la rejilla
 	
 	protected void OnEditActionActivated (object sender, System.EventArgs e){
 
@@ -90,6 +91,7 @@ public partial class MainWindow: Gtk.Window
 	private void showArticulo(long id){
 		ArticuloView articuloView = new ArticuloView(id);
 		articuloView.Show ();
+
 	}	
 
 
@@ -97,8 +99,6 @@ public partial class MainWindow: Gtk.Window
 		Console.WriteLine("Actualizando... Espere... ");
 
 		refresh();
-
-
 	}
 
 

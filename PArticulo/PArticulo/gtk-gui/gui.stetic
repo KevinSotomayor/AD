@@ -11,13 +11,6 @@
   </import>
   <widget class="Gtk.Window" id="MainWindow" design-size="400 300">
     <action-group name="Default">
-      <action id="clearAction">
-        <property name="Type">Action</property>
-        <property name="Label" translatable="yes">_Limpiar</property>
-        <property name="ShortLabel" translatable="yes">_Limpiar</property>
-        <property name="StockId">gtk-clear</property>
-        <signal name="Activated" handler="OnClearActionActivated" />
-      </action>
       <action id="editAction">
         <property name="Type">Action</property>
         <property name="Label" translatable="yes">_Editar</property>
@@ -59,7 +52,6 @@
             <property name="ShowArrow">False</property>
             <node name="toolbar1" type="Toolbar">
               <node type="Toolitem" action="newAction" />
-              <node type="Toolitem" action="clearAction" />
               <node type="Toolitem" action="editAction" />
               <node type="Toolitem" action="refreshAction" />
               <node type="Toolitem" action="deleteAction" />
