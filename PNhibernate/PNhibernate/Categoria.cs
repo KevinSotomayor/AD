@@ -4,8 +4,8 @@ namespace Serpis.Ad
 {
 	public class Categoria
 	{
-		public long Id {get; set;}
-		public string Nombre{get; set;}
+		public virtual long Id {get; set;}
+		public virtual string Nombre{get; set;}
 			
 //		que es aprox:
 //		private string nombre;

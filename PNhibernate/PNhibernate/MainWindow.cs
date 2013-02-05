@@ -13,21 +13,21 @@ public partial class MainWindow: Gtk.Window
 		
 		Configuration configuration = new Configuration();
 		configuration.Configure();
-		
+		configuration.SetProperty(NHibernate.Cfg.Environment.Hbm2ddlKeyWords, "none");
 		configuration.AddAssembly(typeof(Categoria).Assembly);
 		
-		new SchemaExport(configuration).Execute(true, false, false);
+		//new SchemaExport(configuration).Execute(true, false, false);
 		
-		ISessionFactoryConfiguration sessionFactory = configuration.BuildSessionFactory();
-		
-		ISession session = sessionFactory.OpenSession;
-		
-		
-		Categoria categoria = (Categoria)session.Load(typeOf(Categoria),2L);
-		//2L constante = Long
-	
-		
+		ISessionFactory sessionFactory = configuration.BuildSessionFactory();
+
+		ISession session = sessionFactory.OpenSession();
+		Categoria categoria = (Categoria)session.Load(typeof(Categoria), 2L);//2L constante = Long
+		Console.WriteLine("Categoria Id={0} Nombre{1}", categoria.Id, categoria.Nombre);
+		categoria.Nombre = DateTime.Now.ToString();
+		session.SaveOrUpdate(categoria);		
+		session.Flush();
 		session.Close();
+		
 		sessionFactory.Close();
 	}
 	
