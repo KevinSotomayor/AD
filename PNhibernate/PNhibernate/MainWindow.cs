@@ -19,7 +19,8 @@ public partial class MainWindow: Gtk.Window
 		//new SchemaExport(configuration).Execute(true, false, false);
 		
 		ISessionFactory sessionFactory = configuration.BuildSessionFactory();
-
+		
+		//modifico la catg. 2 
 		ISession session = sessionFactory.OpenSession();
 		Categoria categoria = (Categoria)session.Load(typeof(Categoria), 2L);//2L constante = Long
 		Console.WriteLine("Categoria Id={0} Nombre{1}", categoria.Id, categoria.Nombre);
@@ -28,7 +29,68 @@ public partial class MainWindow: Gtk.Window
 		session.Flush();
 		session.Close();
 		
+		//updateCategoria(sessionFactory);
+		
+		//insertCategoria(sessionFactory);
+		
+		loadArticulo(sessionFactory);
+		
 		sessionFactory.Close();
+	}
+	
+	private void loadArticulo(ISessionFactory sessionFactory){
+		using (ISession session = sessionFactory.OpenSession()){
+			Articulo articulo = (Articulo)session.Load(typeof(Articulo), 2L);
+			Console.WriteLine("Articulo Id ={0} Nombre={1} Precio={2}", 
+			                  articulo.Id, articulo.Nombre, articulo.Precio);
+		}
+			
+	}
+//	private void updateCategoria(ISessionFactory sessionFactory){
+//		ISession session = sessionFactory.OpenSession();
+//		try{
+//			Categoria categoria = (Categoria)session.Load(typeof(Categoria), 2L);//2L constante = Long
+//			Console.WriteLine("Categoria Id={0} Nombre{1}", categoria.Id, categoria.Nombre);
+//			categoria.Nombre = DateTime.Now.ToString();
+//			session.SaveOrUpdate(categoria);		
+//			session.Flush();
+//		} finally {
+//			session.Close();
+//		}
+//	}
+	
+//	private void insertCategoria(ISessionFactory sessionFactory){
+//		ISession session = sessionFactory.OpenSession();
+//		try{ 
+//			Categoria categoria = new Categoria();
+//			categoria.Nombre = "Nueva " + DateTime.Now.ToString();
+//			session.SaveOrUpdate(categoria);
+//			session.Flush();
+//		
+//		} finally {
+//			session.Close();
+//	
+//		}
+//	}
+//	
+	private void updateCategoria(ISessionFactory sessionFactory){
+		using(ISession session = sessionFactory.OpenSession()){
+			Categoria categoria = (Categoria)session.Load(typeof(Categoria), 2L);//2L constante = Long
+			Console.WriteLine("Categoria Id={0} Nombre{1}", categoria.Id, categoria.Nombre);
+			categoria.Nombre = DateTime.Now.ToString();
+			session.SaveOrUpdate(categoria);		
+			session.Flush();
+		}
+	}
+	
+	private void insertCategoria(ISessionFactory sessionFactory){
+		using (ISession session = sessionFactory.OpenSession() ){ //-> using == try + finally
+			Categoria categoria = new Categoria();
+			categoria.Nombre = "Nueva " + DateTime.Now.ToString();
+			session.SaveOrUpdate(categoria);
+			session.Flush();
+		
+		}
 	}
 	
 	

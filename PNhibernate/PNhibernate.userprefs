@@ -1,12 +1,17 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="PNhibernate/MainWindow.cs">
+    <Files>
+      <File FileName="PNhibernate/MainWindow.cs" Line="36" Column="30" />
+      <File FileName="PNhibernate/Articulo.cs" Line="10" Column="29" />
+      <File FileName="PNhibernate/Articulo.hbm.xml" Line="6" Column="25" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="PNhibernate" expanded="True">
             <Node name="References" expanded="True" />
-            <Node name="hibernate.cfg.xml" selected="True" />
+            <Node name="MainWindow.cs" selected="True" />
           </Node>
         </State>
       </Pad>
